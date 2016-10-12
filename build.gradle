@@ -80,7 +80,7 @@ task purgeOldJava(type: Delete, dependsOn: 'purgeOldJniLibs') {
     delete "src/main/java"
 }
 
-task compileVlcArmv6(type: Exec, dependsOn: 'purgeOldJava') {
+/*task compileVlcArmv6(type: Exec, dependsOn: 'purgeOldJava') {
     workingDir project.ext.vlcAndroidSource
     commandLine './compile.sh'
     args "-a", "armeabi"
@@ -92,7 +92,7 @@ task buildVlcArmv6(type: Copy, dependsOn: 'compileVlcArmv6') {
     from(vlcAndroidSource.getAbsolutePath() + '/libvlc/jni/libs/armeabi/')
     into('src/main/jniLibs/armeabi/')
     finalizedBy 'copyLibVlcFiles'
-}
+}*/
 
 task compileVlcArmv7a(type: Exec, dependsOn: 'purgeOldJava') {
     workingDir project.ext.vlcAndroidSource
