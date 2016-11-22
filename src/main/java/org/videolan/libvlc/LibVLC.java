@@ -38,9 +38,6 @@ public class LibVLC extends VLCObject<LibVLC.Event> {
         }
     }
 
-    /** Native crash handler */
-    private static OnNativeCrashListener sOnNativeCrashListener;
-
     /**
      * Create a LibVLC withs options
      *
@@ -117,19 +114,6 @@ public class LibVLC extends VLCObject<LibVLC.Event> {
         nativeRelease();
     }
 
-    public interface OnNativeCrashListener {
-        void onNativeCrash();
-    }
-
-    public static void setOnNativeCrashListener(OnNativeCrashListener l) {
-        sOnNativeCrashListener = l;
-    }
-
-    private static void onNativeCrash() {
-        if (sOnNativeCrashListener != null)
-            sOnNativeCrashListener.onNativeCrash();
-    }
-
     /**
      * Sets the application name. LibVLC passes this as the user agent string
      * when a protocol requires it.
@@ -154,7 +138,8 @@ public class LibVLC extends VLCObject<LibVLC.Event> {
         sLoaded = true;
 
         System.loadLibrary("c++_shared");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1
+                && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             try {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB_MR1)
                     System.loadLibrary("anw.10");
